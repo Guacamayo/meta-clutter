@@ -1,7 +1,7 @@
 DESCRIPTION = "Clutter based widget library"
 LICENSE = "LGPLv2.1"
 
-DEPENDS = "clutter-1.14 dbus-glib gdk-pixbuf"
+DEPENDS = "clutter-1.0 dbus-glib gdk-pixbuf"
 
 def get_verdir(v):
     import re
