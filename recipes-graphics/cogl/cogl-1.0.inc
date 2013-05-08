@@ -14,7 +14,7 @@ def get_fpu_setting(bb, d):
         return "--without-fpu"
     return ""
 
-FILESPATH = "${FILE_DIRNAME}/cogl-${@get_verdir("${PV}")}:${FILE_DIRNAME}/cogl-${PV}"
+FILESPATH = "${FILE_DIRNAME}/cogl-${PV}:${FILE_DIRNAME}/cogl-${@get_verdir("${PV}")}:${FILE_DIRNAME}/cogl"
 
 PACKAGES =+ "${PN}-examples"
 
