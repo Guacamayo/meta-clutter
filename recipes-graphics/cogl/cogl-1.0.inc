@@ -4,7 +4,7 @@ LICENSE = "LGPLv2.1+"
 
 INCPR = "r1"
 
-def get_verdir(v):
+def get_cogl_verdir(v):
     import re
     m = re.match("^([0-9]+)\.([0-9]+)", v)
     return "%s.%s" % (m.group(1), m.group(2))
@@ -14,7 +14,9 @@ def get_fpu_setting(bb, d):
         return "--without-fpu"
     return ""
 
-FILESPATH = "${FILE_DIRNAME}/cogl-${PV}:${FILE_DIRNAME}/cogl-${@get_verdir("${PV}")}:${FILE_DIRNAME}/cogl"
+VERBASE = "${@get_cogl_verdir("${PV}")}"
+
+FILESPATH = "${@base_set_filespath(["${FILE_DIRNAME}/${BP}", "${FILE_DIRNAME}/cogl-${VERBASE}", "${FILE_DIRNAME}/${BPN}", "${FILE_DIRNAME}/files"], d)}"
 
 PACKAGES =+ "${PN}-examples"
 
