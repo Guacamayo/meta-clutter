@@ -12,7 +12,9 @@ def get_fpu_setting(bb, d):
         return "--without-fpu"
     return ""
 
-FILESPATH = "${FILE_DIRNAME}/clutter-${PV}:${FILE_DIRNAME}/clutter-${@get_clutter_verdir("${PV}")}:${FILE_DIRNAME}/clutter"
+VERBASE = "${@get_clutter_verdir("${PV}")}"
+
+FILESPATH = "${@base_set_filespath(["${FILE_DIRNAME}/${BP}", "${FILE_DIRNAME}/clutter-${VERBASE}", "${FILE_DIRNAME}/${BPN}", "${FILE_DIRNAME}/files"], d)}"
 
 SRC_URI = "git://git.gnome.org/clutter;protocol=git;tag=${PV} \
            file://enable_tests.patch"
