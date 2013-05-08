@@ -1,0 +1,15 @@
+# Upstream-status: Pending
+Index: git/tests/Makefile.am
+===================================================================
+--- git.orig/tests/Makefile.am	2013-05-08 15:18:56.918596425 +0100
++++ git/tests/Makefile.am	2013-05-08 15:23:26.864781401 +0100
+@@ -10,7 +10,8 @@
+ 
+ INCLUDES = \
+ 	-I$(top_srcdir) \
+-	-I$(top_builddir)
++	-I$(top_builddir)\
++	-I$(top_builddir)/mx
+ 
+ noinst_PROGRAMS = 			\
+ 	test-deform-texture		\

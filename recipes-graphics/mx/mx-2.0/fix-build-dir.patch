@@ -1,0 +1,19 @@
+# Upstream-status: Pending
+Index: git/docs/reference/libmx/Makefile.am
+===================================================================
+--- git.orig/docs/reference/libmx/Makefile.am	2013-05-08 15:31:32.345402505 +0100
++++ git/docs/reference/libmx/Makefile.am	2013-05-08 15:38:02.607779290 +0100
+@@ -1,3 +1,4 @@
++EXTRA_DIST=
+ ## Process this file with automake to produce Makefile.in
+ 
+ # We require automake 1.6 at least.
+@@ -106,7 +107,7 @@
+ GTKDOC_LIBS=$(MX_LIBS) $(top_builddir)/mx/libmx-$(MX_API_VERSION).la
+ 
+ # This includes the standard gtk-doc make rules, copied by gtkdocize.
+-include $(top_srcdir)/gtk-doc.make
++include $(top_builddir)/gtk-doc.make
+ 
+ # Other files to distribute
+ EXTRA_DIST += version.xml.in
