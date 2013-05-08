@@ -2,7 +2,7 @@ DESCRIPTION = "Clutter graphics library"
 HOMEPAGE = "http://www.clutter-project.org/"
 LICENSE = "LGPLv2.1+"
 
-def get_verdir(v):
+def get_clutter_verdir(v):
     import re
     m = re.match("^([0-9]+)\.([0-9]+)", v)
     return "%s.%s" % (m.group(1), m.group(2))
@@ -12,13 +12,13 @@ def get_fpu_setting(bb, d):
         return "--without-fpu"
     return ""
 
-FILESPATH = "${FILE_DIRNAME}/clutter-${@get_verdir("${PV}")}:${FILE_DIRNAME}/clutter-${PV}"
+FILESPATH = "${FILE_DIRNAME}/clutter-${PV}:${FILE_DIRNAME}/clutter-${@get_clutter_verdir("${PV}")}:${FILE_DIRNAME}/clutter"
 
 SRC_URI = "git://git.gnome.org/clutter;protocol=git;tag=${PV} \
            file://enable_tests.patch"
 
 STDDEPENDS = "gtk-doc-native pango glib-2.0 libxfixes json-glib atk \
-	      udev libxkbcommon cogl-${@get_verdir("${PV}")}"
+	      udev libxkbcommon cogl-1.0"
 
 STDDEPENDS_GLX = "virtual/libx11 libxi virtual/libgl"
 STDDEPENDS_EGL = "virtual/egl"
