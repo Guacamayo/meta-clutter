@@ -2,7 +2,7 @@ require mx.inc
 
 DEFAULT_PREFERENCE = "-1"
 
-SRCREV = "a614f778b8147c0679f4400b5d70a3f08dafecce"
+SRCREV = "692f046da880ca7053dcacf3f34d3dd737f89470"
 PV = "2.0.0+git${SRCPV}"
 
 SRC_URI = "git://github.com/clutter-project/mx.git;protocol=git \
