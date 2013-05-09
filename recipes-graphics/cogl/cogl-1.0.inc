@@ -2,27 +2,9 @@ DESCRIPTION = "a modern 3D graphics API with associated utility APIs"
 HOMEPAGE = "http://wiki.clutter-project.org/wiki/Cogl"
 LICENSE = "LGPLv2.1+"
 
-INCPR = "r1"
-
-def get_cogl_verdir(v):
-    import re
-    m = re.match("^([0-9]+)\.([0-9]+)", v)
-    return "%s.%s" % (m.group(1), m.group(2))
-
-def get_fpu_setting(bb, d):
-    if d.getVar('TARGET_FPU', True) in [ 'soft' ]:
-        return "--without-fpu"
-    return ""
-
-VERBASE = "${@get_cogl_verdir("${PV}")}"
-
-FILESPATH = "${@base_set_filespath(["${FILE_DIRNAME}/${BP}", "${FILE_DIRNAME}/cogl-${VERBASE}", "${FILE_DIRNAME}/${BPN}", "${FILE_DIRNAME}/files"], d)}"
+inherit clutter-tweaks
 
 PACKAGES =+ "${PN}-examples"
-
-SRC_URI = "git://git.gnome.org/cogl;protocol=git;tag=${PV}"
-
-S = "${WORKDIR}/git"
 
 AUTOTOOLS_AUXDIR = "${S}/build"
 
@@ -80,8 +62,6 @@ RDEPENDS_${PN}_raspberrypi += "${STDRDEPENDS} ${STDRDEPENDS_GLES2}"
 EXTRA_OECONF             = "${BASE_CONF} ${BASE_CONF_X11_GL}"
 EXTRA_OECONF_beagleboard = "${BASE_CONF} ${BASE_CONF_EGL_GLES}"
 EXTRA_OECONF_raspberrypi = "${BASE_CONF} ${BASE_CONF_EGL_GLES}"
-
-inherit autotools pkgconfig gtk-doc gettext
 
 #Fix up some weirdness in the docs
 do_configure_prepend() {
