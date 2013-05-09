@@ -2,22 +2,9 @@ DESCRIPTION = "Clutter graphics library"
 HOMEPAGE = "http://www.clutter-project.org/"
 LICENSE = "LGPLv2.1+"
 
-def get_clutter_verdir(v):
-    import re
-    m = re.match("^([0-9]+)\.([0-9]+)", v)
-    return "%s.%s" % (m.group(1), m.group(2))
+inherit clutter-tweaks
 
-def get_fpu_setting(bb, d):
-    if d.getVar('TARGET_FPU', True) in [ 'soft' ]:
-        return "--without-fpu"
-    return ""
-
-VERBASE = "${@get_clutter_verdir("${PV}")}"
-
-FILESPATH = "${@base_set_filespath(["${FILE_DIRNAME}/${BP}", "${FILE_DIRNAME}/clutter-${VERBASE}", "${FILE_DIRNAME}/${BPN}", "${FILE_DIRNAME}/files"], d)}"
-
-SRC_URI = "git://git.gnome.org/clutter;protocol=git;tag=${PV} \
-           file://enable_tests.patch"
+SRC_URI += "file://enable_tests.patch"
 
 STDDEPENDS = "gtk-doc-native pango glib-2.0 libxfixes json-glib atk \
 	      udev libxkbcommon cogl-1.0"
@@ -29,7 +16,6 @@ STDRDEPENDS     = "xkeyboard-config"
 STDRDEPENDS_EGL = ""
 STDRDEPENDS_GLX = ""
 
-S = "${WORKDIR}/git"
 AUTOTOOLS_AUXDIR = "${S}/build"
 
 # Disable pretty much everything, override in platform specific set up
@@ -62,8 +48,6 @@ PACKAGES =+ "${PN}-examples"
 DEPENDS        = "${STDDEPENDS} ${STDDEPENDS_GLX}"
 RDEPENDS_${PN} = "${STDRDEPENDS} ${STDRDEPENDS_GLX}"
 EXTRA_OECONF   = "${BASE_CONF} ${BASE_CONF_GLX}"
-
-inherit autotools pkgconfig gtk-doc gettext
 
 FILES_${PN}-examples = "${bindir}/test-* ${pkgdatadir}/redhand.png"
 
