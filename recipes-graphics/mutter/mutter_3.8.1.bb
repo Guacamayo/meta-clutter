@@ -8,6 +8,8 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=94d55d512a9ba36caa9b7df079bae19f"
 
 PACKAGES += "lib${PN} ${PN}-tools ${PN}-sample-plugin ${PN}-sample-plugin-dbg"
 
+RDEPENDS_${PN} += "gsettings-desktop-schemas gnome-themes-standard"
+
 inherit clutter-tweaks update-alternatives gsettings gconf
 
 ALTERNATIVE_${PN} = "x-window-manager"
