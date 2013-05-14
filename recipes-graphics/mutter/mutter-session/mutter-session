@@ -1,0 +1,4 @@
+#!/bin/sh
+
+matchbox-terminal &
+exec mutter $@
