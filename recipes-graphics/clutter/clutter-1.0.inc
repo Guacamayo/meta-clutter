@@ -6,48 +6,42 @@ inherit clutter-tweaks
 
 SRC_URI += "file://enable_tests.patch"
 
-STDDEPENDS = "gtk-doc-native pango glib-2.0 libxfixes json-glib atk \
-	      udev libxkbcommon cogl-1.0"
+PACKAGES =+ "${PN}-examples"
 
-STDDEPENDS_GLX = "virtual/libx11 libxi virtual/libgl"
-STDDEPENDS_EGL = "virtual/egl"
+DEPENDS = "gtk-doc-native pango glib-2.0 json-glib atk udev cogl-1.0"
 
-STDRDEPENDS     = "xkeyboard-config"
-STDRDEPENDS_EGL = ""
-STDRDEPENDS_GLX = ""
+EDEPENDS_X11 = "virtual/libx11 libxi libxfixes"
+EDEPENDS_GLX = "virtual/libgl"
+EDEPENDS_EGL = "virtual/egl"
+
+EDEPENDS_EVDEV = "libxkbcommon"
+ERDEPENDS_EVDEV = "xkeyboard-config"
 
 AUTOTOOLS_AUXDIR = "${S}/build"
 
 # Disable pretty much everything, override in platform specific set up
-BASE_CONF = "--disable-gtk-doc			\
-	     ${@get_fpu_setting(bb, d)}		\
-             --disable-introspection	    	\
-	     --disable-egl-backend		\
-	     --disable-quartz-backend		\
-	     --disable-win32-backend		\
-	     --disable-x11-backend		\
-	     --disable-gdk-backend		\
-	     --disable-wayland-backend		\
-	     --disable-wayland-compositor	\
-	     --disable-cex100-backend		\
-	     --disable-tslib-input		\
-	     --disable-evdev-input		\
-	    "
+EXTRA_OECONF += "--disable-gtk-doc		\
+	     	 ${@get_fpu_setting(bb, d)}	\
+             	 --disable-introspection	\
+	     	 --disable-egl-backend		\
+	     	 --disable-quartz-backend	\
+	     	 --disable-win32-backend	\
+	     	 --disable-x11-backend		\
+	     	 --disable-gdk-backend		\
+	     	 --disable-wayland-backend	\
+	     	 --disable-wayland-compositor	\
+	     	 --disable-cex100-backend	\
+	     	 --disable-tslib-input		\
+	     	 --disable-evdev-input		\
+	    	"
 
-BASE_CONF_EGL = "--enable-egl-backend		\
-		 --enable-evdev-input		\
-		"
-
-BASE_CONF_GLX = "--enable-x11-backend		\
-		 --enable-evdev-input		\
-		"
-
-PACKAGES =+ "${PN}-examples"
+PACKAGECONFIG[x11] = "--enable-x11-backend,,${EDEPENDS_X11}"
+PACKAGECONFIG[glx] = "--enable-x11-backend,,${EDEPENDS_X11} ${EDEPENDS_GLX}"
+PACKAGECONFIG[egl] = "--enable-egl-backend,,${EDEPENDS_EGL}"
+PACKAGECONFIG[evdev] = "--enable-evdev-input,,${EDEPENDS_EVDEV},${ERDEPENDS_EVDEV}"
 
 # Default configuration, distros might want to override
-DEPENDS        = "${STDDEPENDS} ${STDDEPENDS_GLX}"
-RDEPENDS_${PN} = "${STDRDEPENDS} ${STDRDEPENDS_GLX}"
-EXTRA_OECONF   = "${BASE_CONF} ${BASE_CONF_GLX}"
+PACKAGECONFIG ??= "glx"
 
 FILES_${PN}-examples = "${bindir}/test-* ${pkgdatadir}/redhand.png"
 
