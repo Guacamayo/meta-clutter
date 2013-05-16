@@ -8,60 +8,45 @@ PACKAGES =+ "${PN}-examples"
 
 AUTOTOOLS_AUXDIR = "${S}/build"
 
-STDDEPENDS       = "gtk-doc-native pango glib-2.0 gdk-pixbuf"
-STDDEPENDS_GL    = "virtual/libgl libdrm"
-STDDEPENDS_KMS   = "libdrm virtual/egl"
-STDDEPENDS_EGL   = "virtual/egl"
-STDDEPENDS_GLES2 = "virtual/libgles2"
-STDDEPENDS_X11   = "virtual/libx11 libxcomposite libxfixes libxi"
+DEPENDS = "gtk-doc-native pango glib-2.0 gdk-pixbuf"
 
+# Extra DEPENDS for PACKAGECONFIG
+EDEPENDS_GL    = "virtual/libgl libdrm"
+EDEPENDS_GLES2 = "virtual/libgles2"
+EDEPENDS_KMS   = "libdrm virtual/egl"
+EDEPENDS_EGL   = "virtual/egl"
+EDEPENDS_X11   = "virtual/libx11 libxcomposite libxfixes libxi"
+
+# Extra RDEPENDS for PACKAGECONFIG
 # This has to be explictly listed, because cogl dlopens the backends
-STDRDEPENDS       = ""
-STDRDEPENDS_GL    = "libgl"
-STDRDEPENDS_GLES2 = "libgles2"
+ERDEPENDS_GL    = "libgl"
+ERDEPENDS_GLES2 = "libgles2"
 
-BASE_CONF = "--disable-introspection		\
-	     --disable-gtk-doc			\
-	     ${@get_fpu_setting(bb, d)}		\
-	     --enable-examples-install		\
-	     --enable-debug		 	\
-	     --disable-gl			\
-	     --disable-gles			\
-	     --disable-gles2			\
-	     --disable-glx			\
-	    "
+EXTRA_OECONF += "--disable-introspection	\
+	       	 --disable-gtk-doc		\
+	       	 ${@get_fpu_setting(bb, d)}	\
+	       	 --enable-examples-install	\
+	       	 --enable-debug		 	\
+	       	 --disable-gl			\
+	       	 --disable-gles1		\
+	       	 --disable-gles2		\
+	       	 --disable-glx			\
+	    	"
 
-BASE_CONF_EGL_GL = "--enable-gl			\
-		    --enable-kms-egl-platform	\
-		   "
+# GL flavours
+PACKAGECONFIG[gl] = "--enable-gl,,${EDEPENDS_GL},${ERDPENDS_GL}"
+PACKAGECONFIG[gles2] = "--enable-gles2,,${EDEPENDS_GLES2}, ${ERDEPENDS_GLES2}"
 
-BASE_CONF_KMS_GLES = "--enable-gles2		\
-		      --enable-kms-egl-platform	\
-		     "
+# egl backends
+PACKAGECONFIG[egl-kms] = "--enable-kms-egl-platform,,${EDEPENDS_KMS}"
+PACKAGECONFIG[egl-null] = "--enable-null-egl-platform"
+PACKAGECONFIG[egl-x11] = "--enable-xlib-egl-platform,,${EDEPENDS_X11}"
 
-BASE_CONF_EGL_GLES = "--enable-gles2			\
-		      --enable-null-egl-platform	\
-		     "
+# glx
+PACKAGECONFIG[glx] = "--enable-gl --enable-glx, ${EDEPENDS_GL} ${EDEPENDS_X11}"
 
-BASE_CONF_X11_GLES = "--enable-gles2			\
-		      --enable-xlib-egl-platform	\
-		     "
-BASE_CONF_X11_GL = "--enable-gl		\
-		    --enable-glx	\
-		   "
-
-# Some standard machine specific configs, distros might want to override
-DEPENDS             = "${STDDEPENDS} ${STDDEPENDS_X11} ${STDDEPENDS_GL}"
-DEPENDS_beagleboard = "${STDDEPENDS} ${STDDEPENDS_GLES2} ${STDDEPENDS_EGL}"
-DEPENDS_raspberrypi = "${STDDEPENDS} ${STDDEPENDS_GLES2} ${STDDEPENDS_EGL}"
-
-RDEPENDS_${PN}             += "${STDRDEPENDS} ${STDRDEPENDS_GL}"
-RDEPENDS_${PN}_beagleboard += "${STDRDEPENDS} ${STDRDEPENDS_GLES2}"
-RDEPENDS_${PN}_raspberrypi += "${STDRDEPENDS} ${STDRDEPENDS_GLES2}"
-
-EXTRA_OECONF             = "${BASE_CONF} ${BASE_CONF_X11_GL}"
-EXTRA_OECONF_beagleboard = "${BASE_CONF} ${BASE_CONF_EGL_GLES}"
-EXTRA_OECONF_raspberrypi = "${BASE_CONF} ${BASE_CONF_EGL_GLES}"
+# Default to GLX
+PACKAGECONFIG ??= "glx"
 
 #Fix up some weirdness in the docs
 do_configure_prepend() {
@@ -73,4 +58,3 @@ do_configure_prepend() {
 }
 
 FILES_${PN}-examples = "${bindir}/* ${datadir}/cogl/examples-data/*"
-
