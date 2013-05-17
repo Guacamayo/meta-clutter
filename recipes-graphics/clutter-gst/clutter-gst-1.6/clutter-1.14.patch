@@ -21,11 +21,11 @@ index 9b4b53c..f092581 100644
  #endif
 
 +/*
-+ * cogl-1.12 exposes generic GL types in the API, but not the actual includes.
++ * cogl-1.14 exposes generic GL types in the API, but not the actual includes.
 + */
 +#include <cogl/cogl.h>
 +
-+#ifdef COGL_HAS_GLES
++#ifdef COGL_HAS_GLES1
 +#include <GLES/gl.h>
 +#include <GLES/glext.h>
 +#elif COGL_HAS_GLES2
