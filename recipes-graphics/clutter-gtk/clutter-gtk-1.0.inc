@@ -2,7 +2,7 @@ DESCRIPTION = "ClutterGtk"
 HOMEPAGE = "http://www.clutter-project.org/"
 LICENSE = "LGPLv2+"
 
-inherit clutter-tweaks
+inherit clutter
 
 PACKAGES  =+ "${PN}-examples"
 

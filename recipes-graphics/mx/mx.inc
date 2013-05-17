@@ -1,7 +1,7 @@
 DESCRIPTION = "Clutter based widget library"
 LICENSE = "LGPLv2.1"
 
-inherit clutter-tweaks
+inherit clutter
 
 DEPENDS = "clutter-1.0 dbus-glib gdk-pixbuf"
 

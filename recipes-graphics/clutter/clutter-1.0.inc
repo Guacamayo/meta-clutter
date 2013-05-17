@@ -2,7 +2,7 @@ DESCRIPTION = "Clutter graphics library"
 HOMEPAGE = "http://www.clutter-project.org/"
 LICENSE = "LGPLv2.1+"
 
-inherit clutter-tweaks
+inherit clutter
 
 SRC_URI += "file://enable_tests.patch"
 

@@ -2,7 +2,7 @@ DESCRIPTION = "a modern 3D graphics API with associated utility APIs"
 HOMEPAGE = "http://wiki.clutter-project.org/wiki/Cogl"
 LICENSE = "LGPLv2.1+"
 
-inherit clutter-tweaks
+inherit clutter
 
 PACKAGES =+ "${PN}-examples"
 

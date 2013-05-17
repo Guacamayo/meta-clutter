@@ -2,7 +2,7 @@ DESCRIPTION = "Clutter GStreamer"
 HOMEPAGE = "http://www.clutter-project.org/"
 LICENSE = "LGPLv2+"
 
-inherit clutter-tweaks
+inherit clutter
 
 SRC_URI += "file://enable-tests.patch"
 
