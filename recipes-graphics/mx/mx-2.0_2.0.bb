@@ -8,6 +8,7 @@ PV = "2.0.0+git${SRCPV}"
 SRC_URI = "git://github.com/clutter-project/mx.git;protocol=git \
 	   file://fix-build-dir.patch \
 	   file://fix-test-includes.patch \
+	   file://mx-combo-box-populate.patch \
 	  "
 S = "${WORKDIR}/git"
 
