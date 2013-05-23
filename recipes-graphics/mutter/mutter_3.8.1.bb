@@ -10,7 +10,7 @@ PACKAGES += "lib${PN} ${PN}-tools ${PN}-sample-plugin ${PN}-sample-plugin-dbg"
 
 RDEPENDS_${PN} += "gsettings-desktop-schemas gnome-themes-standard"
 
-inherit clutter-tweaks update-alternatives gsettings gconf
+inherit clutter update-alternatives gsettings gconf
 
 ALTERNATIVE_${PN} = "x-window-manager"
 ALTERNATIVE_TARGET[x-window-manager] = "${bindir}/mutter"
