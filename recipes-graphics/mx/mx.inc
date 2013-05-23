@@ -18,3 +18,4 @@ EXTRA_OECONF = "--disable-introspection		\
 		--without-glade			\
 	       "
 
+FILES_${PN} += "${datadir}"
